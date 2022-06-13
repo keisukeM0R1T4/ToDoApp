@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" rel="stylesheet">
+  </head>
+  <body>
+    <form action="/" method="post">
+      <label>タスクの追加</label>
+      <input required type="text" name="add" placeholder="何をする？"/>
+      <input type="submit" value="追加"/>
+    </form>
+    <h1>やること</h1>
+    <ul>
+      <% for(let todo of todos){
+        if(todo.done === 0){ %>
+        <li>
+          <span><%= todo.content %></span>
+          <form action="/change" method="post">
+            <input type="hidden" name="change" value="<%= todo.id %>">
+            <button id="done"><i class="fa-solid fa-square-check"></i>完了</button>
+          </form>
+          <form action="/delete" method="post">
+            <input type="hidden" name="del" value="<%= todo.id %>">
+            <button name="del-btn" id="del"><i class="fa-solid fa-trash-can"></i>削除</button>
+          </form>
+        </li>
+        <% } 
+      }%>
+    </ul>
+    <h1>完了済み</h1>
+    <% for(let todo of todos){ 
+      if(todo.done === 1){ %>
+      <li>
+        <span><%= todo.content %></span>
+        <form action="/change" method="post">
+          <input type="hidden" name="change" value="<%= todo.id %>">
+          <button id="done"><i class="fa-solid fa-square-check"></i>未完了</button>
+        </form>
+        <form action="/delete" method="post">
+          <input type="hidden" name="del" value="<%= todo.id %>">
+          <button name="del-btn" id="del"><i class="fa-solid fa-trash-can"></i>削除</button>
+        </form>
+      </li>
+      <% }
+     } %>
+  </ul>
+  </body>
+</html>
